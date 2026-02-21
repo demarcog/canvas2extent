@@ -20,7 +20,7 @@ repository=https://github.com/demarcog/canvas2extent
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-# changelog=
+changelog=initial release of the plugin
 
 # Tags are comma separated with spaces allowed
 tags=python
@@ -39,9 +39,10 @@ deprecated=False
 # Check the documentation for more information.
 # plugin_dependencies=
 
-Category of the plugin: Raster, Vector, Database or Web
-# category=
+#Category of the plugin: Raster, Vector, Database or Web
+#category=Layout
 
 # If the plugin can run on QGIS Server.
 server=False
 
+license=this plugin complies with the GPL version 2 or greater license.
