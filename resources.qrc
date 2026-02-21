@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/plugins/canvas2extent" >
+        <file>icon.png</file>
+        <file>c2v_icon.png</file>
+    </qresource>
+</RCC>
