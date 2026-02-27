@@ -35,13 +35,6 @@ class Canvas2Extent:
     """QGIS Plugin Implementation."""
 
     def __init__(self, iface):
-        """Constructor.
-
-        :param iface: An interface instance that will be passed to this class
-            which provides the hook by which you can manipulate the QGIS
-            application at run time.
-        :type iface: QgsInterface
-        """
         # Save reference to the QGIS interface
         self.iface = iface
         # initialize plugin directory
@@ -58,6 +51,11 @@ class Canvas2Extent:
             self.translator.load(locale_path)
             QCoreApplication.installTranslator(self.translator)
 
+        # Put icon at menu entry unfortunately it doesn't work well ....
+        #icon_path = ':/plugins/canvas2extent/icon.png'
+        #icon = QIcon(icon_path)
+        #self.menu = self.iface.pluginMenu().addMenu(icon, self.tr("&Canvas2Extent"))
+        
         # Declare instance attributes
         self.actions = []
         self.menu = self.tr(u'&Canvas2Extent')
@@ -68,16 +66,6 @@ class Canvas2Extent:
 
     # noinspection PyMethodMayBeStatic
     def tr(self, message):
-        """Get the translation for a string using Qt translation API.
-
-        We implement this ourselves since we do not inherit QObject.
-
-        :param message: String for translation.
-        :type message: str, QString
-
-        :returns: Translated version of message.
-        :rtype: QString
-        """
         # noinspection PyTypeChecker,PyArgumentList,PyCallByClass
         return QCoreApplication.translate('Canvas2Extent', message)
 
@@ -93,45 +81,6 @@ class Canvas2Extent:
         status_tip=None,
         whats_this=None,
         parent=None):
-        """Add a toolbar icon to the toolbar.
-
-        :param icon_path: Path to the icon for this action. Can be a resource
-            path (e.g. ':/plugins/foo/bar.png') or a normal file system path.
-        :type icon_path: str
-
-        :param text: Text that should be shown in menu items for this action.
-        :type text: str
-
-        :param callback: Function to be called when the action is triggered.
-        :type callback: function
-
-        :param enabled_flag: A flag indicating if the action should be enabled
-            by default. Defaults to True.
-        :type enabled_flag: bool
-
-        :param add_to_menu: Flag indicating whether the action should also
-            be added to the menu. Defaults to True.
-        :type add_to_menu: bool
-
-        :param add_to_toolbar: Flag indicating whether the action should also
-            be added to the toolbar. Defaults to True.
-        :type add_to_toolbar: bool
-
-        :param status_tip: Optional text to show in a popup when mouse pointer
-            hovers over the action.
-        :type status_tip: str
-
-        :param parent: Parent widget for the new action. Defaults None.
-        :type parent: QWidget
-
-        :param whats_this: Optional text to show in the status bar when the
-            mouse pointer hovers over the action.
-
-        :returns: The action that was created. Note that the action is also
-            added to self.actions list.
-        :rtype: QAction
-        """
-
         icon = QIcon(icon_path)
         action = QAction(icon, text, parent)
         action.triggered.connect(callback)
@@ -148,6 +97,8 @@ class Canvas2Extent:
             self.iface.addToolBarIcon(action)
 
         if add_to_menu:
+            #Maybe it works...
+            #self.iface.pluginMenu().addMenu(icon, self.tr("&Canvas2Extent"),action)
             self.iface.addPluginToMenu(
                 self.menu,
                 action)
@@ -196,7 +147,10 @@ class Canvas2Extent:
             name = item.name()
             names.append(name)
         layoutlist1.addItems(names)
-        self.iface.messageBar().pushMessage("C2E",name+" layout found: "+"   Now choose and press Update...")
+        if names == []:
+            self.iface.messageBar().pushCritical("C2E"," no layout found: "+"  This plugin requires at least one...")
+        else:
+            self.iface.messageBar().pushMessage("C2E",name+" layout found: "+"   Now choose and press Update...")
 
     def update_layout(self):
         from qgis.core import QgsProject, QgsLayout, QgsLayoutItemMap, QgsLayoutManager
@@ -213,7 +167,7 @@ class Canvas2Extent:
         layout_name = layoutlist1.currentText()  # get layout id 
         layout = layout_manager.layoutByName(layout_name)# set layout to work on
         if layout is None:
-            self.iface.messageBar().pushMessage("C2E"," layout not found: "+"   please make a layout to use this plugin...")
+            self.iface.messageBar().pushInfo("C2E"," layout not found: "+"   please make a layout to use this plugin...")
         else:
         # get layout map item
             map_item = None
@@ -225,6 +179,23 @@ class Canvas2Extent:
             # updates layout
             layout.refresh()
             self.iface.messageBar().pushMessage("C2E",layout_name+" layout updated: "+"   Now you can go and check results")
+            self.dlg.ShowL.setEnabled(True)
+        
+    def open_layout(self):
+        from qgis.core import QgsProject, QgsLayout, QgsLayoutItemMap, QgsLayoutManager
+        from qgis.utils import iface
+        #get input data from combo box
+        layoutlist1=self.dlg.ComboLayout
+        # get current project
+        project = QgsProject.instance()
+        # get layout manager to show layouts
+        layout_manager = project.layoutManager()
+        layout_name = layoutlist1.currentText()  # get layout id
+        if layout_name == "":
+            self.iface.messageBar().pushCritical("C2E"," layout not found: "+"   please make a layout to use this plugin...")
+        else:
+            layout_to_open = layout_manager.layoutByName(layout_name)# set layout to work on
+            self.iface.openLayoutDesigner(layout_to_open)
 
     def run(self):
         """Run method that performs all the real work"""
@@ -242,6 +213,7 @@ class Canvas2Extent:
         #Buttons events
         self.dlg.Load.clicked.connect(self.load_layout)
         self.dlg.Update.clicked.connect(self.update_layout)
+        self.dlg.ShowL.clicked.connect(self.open_layout)
         # See if OK was pressed
         if result==1:
             self.dlg.ComboLayout.clear()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>295</width>
-    <height>302</height>
+    <height>363</height>
    </rect>
   </property>
   <property name="font">
@@ -145,7 +145,7 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>250</y>
+     <y>320</y>
      <width>231</width>
      <height>31</height>
     </rect>
@@ -156,6 +156,30 @@
    <property name="icon">
     <iconset theme="quit">
      <normaloff>.</normaloff>.</iconset>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="ShowL">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>250</y>
+     <width>231</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Arial</family>
+     <pointsize>10</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>SHOW UPDATED LAYOUT</string>
    </property>
   </widget>
  </widget>

@@ -6,7 +6,7 @@
 name=Canvas2Extent
 qgisMinimumVersion=3.0
 description=Automatic Canvas to layout extent
-version=0.1
+version=0.5
 author=Giuseppe De Marco
 email=demarco.giuseppe@gmail.com
 
@@ -20,7 +20,7 @@ repository=https://github.com/demarcog/canvas2extent
 
 hasProcessingProvider=no
 # Uncomment the following line and add your changelog:
-changelog=initial release of the plugin
+changelog= V 0.5 introduces a new button to show updated layout, button is enabled only when an update is made, plus some minor code corrections about conditional (if then else) and checks to prevent python errors 
 
 # Tags are comma separated with spaces allowed
 tags=python
@@ -39,10 +39,9 @@ deprecated=False
 # Check the documentation for more information.
 # plugin_dependencies=
 
-#Category of the plugin: Raster, Vector, Database or Web
-#category=Layout
+Category of the plugin: Raster, Vector, Database or Web
+# category=
 
 # If the plugin can run on QGIS Server.
 server=False
 
-license=this plugin complies with the GPL version 2 or greater license.

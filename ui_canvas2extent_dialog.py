@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Canvas2ExtentDialogBase(object):
     def setupUi(self, Canvas2ExtentDialogBase):
         Canvas2ExtentDialogBase.setObjectName("Canvas2ExtentDialogBase")
-        Canvas2ExtentDialogBase.resize(295, 302)
+        Canvas2ExtentDialogBase.resize(295, 363)
         font = QtGui.QFont()
         font.setFamily("Arial")
         Canvas2ExtentDialogBase.setFont(font)
@@ -68,10 +68,20 @@ class Ui_Canvas2ExtentDialogBase(object):
         self.label.setScaledContents(True)
         self.label.setObjectName("label")
         self.Quit = QtWidgets.QPushButton(Canvas2ExtentDialogBase)
-        self.Quit.setGeometry(QtCore.QRect(30, 250, 231, 31))
+        self.Quit.setGeometry(QtCore.QRect(30, 320, 231, 31))
         icon = QtGui.QIcon.fromTheme("quit")
         self.Quit.setIcon(icon)
         self.Quit.setObjectName("Quit")
+        self.ShowL = QtWidgets.QPushButton(Canvas2ExtentDialogBase)
+        self.ShowL.setEnabled(False)
+        self.ShowL.setGeometry(QtCore.QRect(30, 250, 231, 61))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
+        self.ShowL.setFont(font)
+        self.ShowL.setObjectName("ShowL")
 
         self.retranslateUi(Canvas2ExtentDialogBase)
         self.Load.clicked.connect(Canvas2ExtentDialogBase.exec) # type: ignore
@@ -87,3 +97,4 @@ class Ui_Canvas2ExtentDialogBase(object):
         self.Title.setText(_translate("Canvas2ExtentDialogBase", "Canvas2Extent by Giuseppe De Marco 2026"))
         self.Load.setText(_translate("Canvas2ExtentDialogBase", "LOAD LAYOUTS"))
         self.Quit.setText(_translate("Canvas2ExtentDialogBase", "QUIT"))
+        self.ShowL.setText(_translate("Canvas2ExtentDialogBase", "SHOW UPDATED LAYOUT"))
